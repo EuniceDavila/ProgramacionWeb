@@ -5,7 +5,7 @@
 **Nombre del alumno:** *EUNICE RAMONA DÁVILA LUGO*  
 **Número de control:** *`21100187`*
 
-### Historial académico
+### Historial académico 
 
 | Nivel | Institución | Periodo |
 |-------|-------------|---------|
