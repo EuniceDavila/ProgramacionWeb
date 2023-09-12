@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+           margin: 0;
+           padding: 0;
+        }
+        .contenedor{
+           height: 100vh;
+            width: 100vw;
+            background-color: blueviolet;
+            display: grid;
+            grid-template-columns: 75% 25%;
+            grid-template-rows: 40% 40% 20%;
+         /*   justify-content: center;
+         align-content: center;*/
+            align-items: stretch;
+            justify-items: stretch;
+            grid-template-areas: 'enca col1'
+            'col2 col1'
+            'piep piep ';
+        }
+        .caja{
+          /*  width: 100px;
+            height: 100px;*/
+            background-color: rgb(210, 202, 240);
+            border: 1px solid rgb(79, 8, 94);
+        }
+
+        #caja1{grid-area: enca;}
+        #caja2{grid-area: col1;}
+        #caja3{grid-area: col2;}
+        #caja4{grid-area: piep;}
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="caja" id="caja1">Caja1</div>
+        <div class="caja" id="caja2">Caja2</div>
+        <div class="caja" id="caja3">Caja3</div>
+        <div class="caja" id="caja4">Caja4</div>
+    </div>
+</body>
+</html>
