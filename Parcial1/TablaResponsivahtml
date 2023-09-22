@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,thead,tbody,tr,th,td{
+            border: 1px solid rgb(98, 50, 112);
+            margin-top: 0;
+            color: rgb(4, 4, 83);
+            background-color: rgb(219, 129, 255);
+           text-align: center;
+           font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        tbody td:nth-child(even){
+          background-color: rgba(232, 194, 240, 0.904);
+        }
+        @media screen and (max-width:600px) 
+        {
+            table,thead,tbody,tr,th,td{
+            display: block;
+        }
+        thead{
+            display: none;
+        }
+        td{
+            padding-left: 50%;
+            margin-top: 0;
+            color: rgb(8, 8, 51);
+            background-color: rgb(222, 177, 240);
+        }
+        td:nth-child(1){padding-left: 0; text-align: center; background-color: rgb(171, 34, 212);}
+        td:nth-child(2)::before{content: "LUNES"; position: absolute;left:10px;}
+        td:nth-child(3)::before{content: "MARTES"; position: absolute;left:10px;}
+        td:nth-child(4)::before{content: "MIÉRCOLES"; position: absolute;left:10px;}
+        td:nth-child(5)::before{content: "JUEVES"; position: absolute;left:10px;}
+        td:nth-child(6)::before{content: "VIERNES"; position: absolute;left:10px;}
+    }
+
+    </style>
+</head>
+<body>
+    <h2><center>HORARIO</center></h2>
+    <table>
+        <thead>
+            <tr>
+                <th>HORA</th>
+                <th>LUNES</th>
+                <th>MARTES</th>
+                <th>MIÉRCOLES</th>
+                <th>JUEVES</th>
+                <th>VIERNES</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>7:00 - 8:00</td>
+                <td>PROGRAMACIÓN WEB</td>
+                <td>PROGRAMACIÓN WEB</td>
+                <td>PROGRAMACIÓN WEB</td>
+                <td>PROGRAMACIÓN WEB</td>
+                <td>PROGRAMACIÓN WEB</td></tr>
+            <tr><td>8:00 - 9:00</td>
+                <td>TALLER DE BASE DE DATOS</td>
+                <td>TALLER DE BASE DE DATOS</td>
+                <td>X</td>
+                <td>TALLER DE BASE DE DATOS</td>
+                <td>TALLER DE BASE DE DATOS</td></tr>
+            <tr><td>10:00 - 11:00</td>
+                <td>X</td>
+                <td> GRAFICACIÓN</td>
+                <td> GRAFICACIÓN</td>
+                <td> GRAFICACIÓN</td>
+                <td> GRAFICACIÓN</td></tr>
+            <tr><td>12:00 - 14:00</td>
+                <td>PRINCIPIOS</td>
+                <td> X </td>
+                <td> PRINCIPIOS</td>
+                <td>X</td>
+                <td> PRINCIPIOS</td></tr>
+        </tbody>
+    </table>
+</body>
+</html>
