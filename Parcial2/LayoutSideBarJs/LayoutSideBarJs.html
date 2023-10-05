@@ -5,60 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        *{
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-size: 20px;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            color: black;
-           
-        }
-        body{
-            width: 100vw;
-            height: 100vh;
-           overflow: hidden;
-        }
-        .cont{
-            border: 2px solid rgb(64, 6, 66);
-            height: 100%;
-        }
-       #header{
-        position: static;
-        background-color: rgb(199, 94, 185);
-        text-align: center;
-        line-height: 100px;
-        vertical-align: middle;
-        height: 15%;
-        width: 100%;
-        
-       }
-        #sidebar{
-            width: 20%;
-            left: 0%;
-            background-color: rgb(219, 146, 216);
-            position: absolute;
-            transition: transform 0.3s ease-in-out; 
-            transform: translateX(0); 
-        }
-        #content{
-            right: 0%;
-            width: 80%;
-            position: absolute;
-            background-color: rgb(250, 204, 248);
-            transition: transform 0.3s ease-in-out; 
-            transform: translateX(0); 
-        }
-        /*input#toggle{
-            display: none;
-        }*/
 
-        .sideBarOculto{
-            display: none;
-        }
-        .contenidoCompleto{
-            width: 100% !important; 
-        }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+}
+
+.cont {
+    border: 2px solid rgb(64, 6, 66);
+    height: 100%;
+}
+
+#header {
+    position: static;
+    background-color: rgb(199, 94, 185);
+    text-align: center;
+    line-height: 100px;
+    vertical-align: middle;
+    height: 15%;
+    width: 100%;
+}
+
+#sidebar {
+    width: 20%;
+    left: 0;
+    background-color: rgb(219, 146, 216);
+    position: absolute;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out; 
+    transform: translateX(0);
+}
+
+#content {
+    right: 0;
+    width: 80%;
+    position: absolute;
+    background-color: rgb(250, 204, 248);
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    transform: translateX(0);
+}
+
+#content.contenidoCompleto {
+    width: 100%;
+}
+
+#sidebar.sideBarOculto {
+    transform: translateX(-100%);
+}
     </style>
 </head>
 <body>
