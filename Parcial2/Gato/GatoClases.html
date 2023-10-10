@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .contenedor{
+            height: 100vh;
+            width: 100vw;
+            background-color: rgba(132, 0, 255, 0.623);
+            display: grid;
+            grid-template-columns: 150px 150px 150px;
+            grid-template-rows: 150px 150px 150px 150px;
+            justify-content: center;
+            align-items: stretch;
+            justify-items: stretch;
+        }
+        #btnlim {
+            margin-top: 10px;
+            font-size: 1.5em;
+            padding: 10px 20px;
+            background-color: rgb(120, 10, 163);
+            color: white;
+        }
+        .caja{
+            background-color: rgb(210, 202, 240);
+            border: 3px solid rgb(79, 8, 94);
+            font-size: 60px;
+            text-align: center;
+            line-height: 2em;
+        }
+        .jugador-X {
+            color: rgba(0, 0, 255, 0.616);
+        }
+        .jugador-O {
+            color: rgba(216, 22, 22, 0.849);
+        }
+        #caja11 {
+            align-self: center;
+            justify-self: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor" id="cont">
+        <div class="caja" id="caja1"></div>
+        <div class="caja" id="caja2"></div>
+        <div class="caja" id="caja3"></div>
+        <div class="caja" id="caja4"></div>
+        <div class="caja" id="caja5"></div>
+        <div class="caja" id="caja6"></div>
+        <div class="caja" id="caja7"></div>
+        <div class="caja" id="caja8"></div>
+        <div class="caja" id="caja9"></div>
+        <div  id="caja10"></div>
+        <div  id="caja11"><button id="btnlim" type="button">Limpiar</button></div>
+        <div  id="caja12"></div>
+    </div>
+    <script>
+        var jugador = "X";
+
+        document.getElementById("cont").addEventListener("click", function(e){
+            console.log(e.target.id);
+            var element = document.getElementById(e.target.id);
+
+            if (element.innerText == "") {
+                element.innerText = jugador;
+                element.classList.add("jugador-" + jugador);
+                jugador = (jugador == "X") ? "O" : "X";
+            }
+        })
+
+        document.getElementById("btnlim").addEventListener("click", function(){
+            let cajas= document.getElementsByClassName("caja");
+
+            for(const elemento of cajas){
+                elemento.innerText = "";
+                elemento.classList.remove("jugador-X", "jugador-O");
+            }
+
+            jugador = "X";
+        })
+    </script>
+</body>
+</html>
