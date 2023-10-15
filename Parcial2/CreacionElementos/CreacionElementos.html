@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="contenedor">
+
+    </div>
+
+    <script>
+        let encabezado=['Materia','Lunes', 'Martes','Miércoles','Jueves','Viernes'];
+
+       let tab = document.createElement("table");
+       let datos = [{
+        materia:"PROGRAMACIÓN WEB", 
+        lunes:"7:00 - 8:00", 
+        martes:"7:00 - 8:00",
+        miercoles:"7:00 - 8:00",
+        jueves:"7:00 - 8:00",
+        viernes:"7:00 - 8:00"
+        
+           },{
+        materia:"TALLER DE BASE DE DATOS", 
+        lunes:"8:00 - 9:00", 
+        martes:"8:00 - 9:00",
+        miercoles:"",
+        jueves:"8:00 - 9:00",
+        viernes:"8:00 - 9:00"
+       },{
+        materia:"GRAFICACIÓN", 
+        lunes:"", 
+        martes:"10:00 - 11:00",
+        miercoles:"10:00 - 11:00",
+        jueves:"10:00 - 11:00",
+        viernes:"10:00 - 11:00"
+       },{
+        materia:"PRINCIPIOS ELECTRICOS", 
+        lunes:"12:00 - 2:00", 
+        martes:"",
+        miercoles:"12:00 - 2:00",
+        jueves:"",
+        viernes:"1:00 - 2:00"
+       }];
+
+       let enc = document.createElement("thead");
+       let fil = document.createElement("tr");
+
+       encabezado.forEach(elemeto => {
+        let th = document.createElement("th");
+        th.innerText=elemeto;
+        fil.appendChild(th);
+       });
+
+       enc.appendChild(fil);
+       tab.appendChild(enc);
+
+       let tbody = document.createElement("tbody");
+
+       datos.forEach(function(elemeto){
+        let fila = document.createElement("tr");
+       
+        let td1 = document.createElement("td");
+        td1.innerText = elemeto.materia;
+        fila.appendChild(td1);
+
+        let td2 = document.createElement("td");
+        td2.innerText = elemeto.lunes;
+        fila.appendChild(td2);
+
+        let td3 = document.createElement("td");
+        td3.innerText = elemeto.martes;
+        fila.appendChild(td3);
+
+        let td4 = document.createElement("td");
+        td4.innerText = elemeto.miercoles;
+        fila.appendChild(td4);
+
+        let td5 = document.createElement("td");
+        td5.innerText = elemeto.jueves;
+        fila.appendChild(td5);
+
+        let td6 = document.createElement("td");
+        td6.innerText = elemeto.viernes;
+        fila.appendChild(td6);
+
+        tbody.appendChild(fila);
+    })
+      
+       tab.appendChild(tbody);
+       
+       document.getElementById("contenedor").appendChild(tab);
+
+       //Estilos tabla
+       tab.style.border = "4px solid black";
+       tab.style.width = "80%"; 
+       tab.style.margin = "20px auto";
+       tab.style.borderCollapse = "collapse";
+       tab.style.textAlign= "center";
+       tab.style.background="rgb(167, 204, 252)";
+       tab.style.fontSize="18px"
+      
+
+
+       let celdas = document.querySelectorAll("table td, table th");
+       // Aplica estilos a las celdas
+       celdas.forEach(celda => {
+       celda.style.padding = "8px"; 
+       celda.style.border = "2px solid black"; 
+       celda.style.fontFamily = "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif";
+});
+
+    </script>
+</body>
+</html>
