@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+            background-color: #f3e5e5;
+            font-size: 35px;
+            color: black;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #poke-container {
+            background-color: #dccbdf;
+            border: 3px solid #505050;
+            padding: 20px;
+            width: 800px;
+            height: 500px;
+            margin: auto;
+        }
+
+        .btn {
+            margin-top: 10px;
+            font-size: 1.5em;
+            padding: 5px 10px;
+            background-color: rgb(120, 10, 163);
+            color: white;
+            font-size: 25px;
+        }
+
+        h1 {
+            font-size: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="poke-container">
+        <h1>Pokémon</h1>
+        <div id="poke"></div>
+        <button id="btnxml" class="btn">Petición XmlHttpRequest</button>
+        <button id="btnfetch" class="btn">Petición Fetch</button>
+        <button id="btnAsync" class="btn">Petición Async</button>
+        <button id="btnJQ" class="btn">Petición JQ</button>
+        <button id="btnAX" class="btn">Petición AX</button>
+    </div>
+
+    <script>
+        window.onload = function () {
+            let btnpedir = document.querySelector("#btnxml");
+            btnpedir.addEventListener("click", () => {
+                const xhr = new XMLHttpRequest();
+                xhr.addEventListener("readystatechange", function () {
+                    if (this.readyState === this.DONE) {
+
+                        let objetorespuesta = JSON.parse(this.responseText);
+                        document.getElementById("poke").innerHTML = `<p>${objetorespuesta.id}</p>
+      <p>${objetorespuesta.name}</p>
+      <img src ='${objetorespuesta.sprites.front_default}'/>`;
+                    }
+                });
+
+                xhr.open("GET", `https://pokeapi.co/api/v2/pokemon/${getRandomnumber()}`);
+                xhr.send();
+            });
+            function getRandomnumber() {
+                let number = Math.floor(Math.random() * 591);
+                return number;
+            }
+
+            document.getElementById("btnfetch").addEventListener("click", () => {
+                fetch(`https://pokeapi.co/api/v2/pokemon/${getRandomnumber()}`)
+                    .then(objRespuesta => objRespuesta.json())
+                    .then(datoJson => {
+                        document.getElementById("poke").innerHTML = `<p>${datoJson.id}</p>
+      <p>${datoJson.name}</p>
+      <img src ='${datoJson.sprites.front_default}'/>`;
+                    });
+            });
+
+            document.getElementById("btnAsync").addEventListener("click", async () => {
+                let objRespuesta = await fetch(`https://pokeapi.co/api/v2/pokemon/${getRandomnumber()}`);
+                let datoJson = await objRespuesta.json();
+                document.getElementById("poke").innerHTML = `<p>${datoJson.id}</p>
+      <p>${datoJson.name}</p>
+      <img src ='${datoJson.sprites.front_default}'/>`;
+            });
+
+            $(document).ready(function () {
+                document.getElementById("btnJQ").addEventListener("click", () => {
+                    $.get(`https://pokeapi.co/api/v2/pokemon/${getRandomnumber()}`, function (datoJson) {
+                        document.getElementById("poke").innerHTML = `<p>${datoJson.id}</p>
+      <p>${datoJson.name}</p>
+      <img src ='${datoJson.sprites.front_default}'/>`;
+                    });
+                });
+            });
+
+            document.getElementById("btnAX").addEventListener("click", async () => {
+                axios({
+                    method: 'get',
+                    url: `https://pokeapi.co/api/v2/pokemon/${getRandomnumber()}`,
+                    responseType: 'json'
+                })
+                    .then(function (response) {
+                        const datoJson = response.data;
+                        document.getElementById("poke").innerHTML = `<p>${datoJson.id}</p>
+        <p>${datoJson.name}</p>
+        <img src ='${datoJson.sprites.front_default}'/>`;
+                    })
+            });
+        }
+
+    </script>
+</body>
+
+</html>
