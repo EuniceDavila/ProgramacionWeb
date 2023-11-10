@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeticionSelect</title>
+
+    <style>
+
+body{
+    background-color: rgb(231, 171, 227);
+}
+        #Peticion {
+            margin-top: 10px;
+            font-size: 1.5em;
+            padding: 10px 20px;
+            background-color: #7810a3;
+            color: white;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #razas {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1em;
+        }
+
+        #imgDog {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <select id="razas"></select>
+    <button id="Peticion">Petición</button>
+    <img id="imgDog">
+
+    <script>
+        fetch("https://dog.ceo/api/breeds/list/all")
+            .then(respuesta => respuesta.json())
+            .then(function (dato) {
+
+                for (const propiedad in dato.message) {
+                    if (Object.hasOwnProperty.call(dato.message, propiedad)) {
+                        let opc = document.createElement("option");
+                        opc.value = propiedad;
+                        opc.innerText = propiedad;
+                        document.getElementById("razas").appendChild(opc);
+                    }
+                }
+            })
+
+        document.getElementById("Peticion").addEventListener("click", () => {
+            let option = document.getElementById("razas").value;
+
+            fetch(`https://dog.ceo/api/breed/${option}/images/random`)
+                .then(respuesta => respuesta.json())
+                .then(function (dato) {
+                    let img = document.getElementById("imgDog"); 
+                    img.src = dato.message;
+                })
+        })
+    </script>
+</body>
+</html>
