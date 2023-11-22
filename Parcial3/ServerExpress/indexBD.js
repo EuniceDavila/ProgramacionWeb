@@ -9,17 +9,17 @@ const connection = mysql2.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'alumnos'
+    database: 'actores'
 });
 
-    app.get('/Alumno', (req, res) => {
+    app.get('/Actor', (req, res) => {
         console.log(req.query.NumControl);
         let consulta = '';
     
-        if (typeof(req.query.NumControl) === 'undefined'){
-            consulta = `SELECT * FROM alumno`;
+        if (typeof(req.query.id) === 'undefined'){
+            consulta = `SELECT * FROM actor`;
         } else {
-            consulta = `SELECT * FROM alumno WHERE NumControl=${req.query.NumControl}`;
+            consulta = `SELECT * FROM actor WHERE id=${req.query.id}`;
         }
     
         console.log(consulta);
@@ -28,7 +28,7 @@ const connection = mysql2.createConnection({
             consulta,
             function(err, results, fields) {
                 if (results.length==0) {
-                    res.json({ mensaje: 'El número de control No existe' });
+                    res.json({ mensaje: 'Los datos del actor no estan almacenados en la base de datos' });
                 } else{
                     res.json(results);
                 }
