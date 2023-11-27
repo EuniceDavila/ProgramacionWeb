@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Consulta de Actores</title>
 
     <style>
         * {
@@ -15,7 +15,7 @@
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             text-align: center;
             background-color: rgb(216, 223, 252);
-            font-size: 25px;
+            font-size: 18px;
             color: black;
             display: flex;
             justify-content: center;
@@ -29,19 +29,20 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 600px;
-            height: 500px;
+            width: 80%;
+            max-width: 500px;
+            margin: auto;
         }
 
         #btn {
             background-color: #3498db;
             color: #fff;
-            padding: 20px 50px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 50px;
+            border-radius: 5px;
             cursor: pointer;
             margin-top: 15px;
-            font-size: 20px;
+            font-size: 16px;
         }
 
         label {
@@ -51,35 +52,82 @@
         }
 
         input {
-            width: 100%;
+            width: 92%;
             padding: 8px;
             margin-bottom: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         h2 {
-            margin: 20px auto;
-            width: 300px;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
     <div class="contenedor">
-<form action="respuesta.php" method="get">
-        <h2>Formulario</h2>
+        <form>
+            <h2>Consulta de Actor</h2>
 
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre">
+            <label for="id">ID Actor</label>
+            <input type="number" id="id">
 
-        <label for="edad">Edad:</label>
-        <input type="number" id="edad" name="edad">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre">
 
-        <label for="tefono">Teléfono:</label>
-        <input type="text" id="telefono" name="telefono">
+            <label for="fecha_nacimiento">Fecha de nacimiento</label>
+            <input type="text" id="fecha_nacimiento">
 
-        <button type="submit" id="btn">Enviar</button>
+            <label for="lugar_nacimiento">Lugar de nacimiento</label>
+            <input type="text" id="lugar_nacimiento">
+
+            <label for="ha_ganado_premios">¿Ha ganado Premios?</label>
+            <input type="text" id="ha_ganado_premios">
+
+            <label for="cantidad_premios">Cantidad de premios</label>
+            <input type="number" id="cantidad_premios">
+
+            <label for="peliculas">Películas</label>
+            <input type="text" id="peliculas">
+
+            <button type="button" id="btn">Consultar</button>
+        </form>
     </div>
-</form>
+
+    <script>
+        document.getElementById("btn").addEventListener("click", async () => {
+            let id = prompt("Ingresa el ID del Actor");
+            let response = await fetch(`http://localhost:8082/Actor?id=${id}`, { method: "GET" });
+            let data = await response.json();
+            console.log(data);
+
+            if (data.status == 0) {
+                alert(data.mensaje);
+                console.log(data.status);
+            } else {
+                alert(data.mensaje);
+                console.log(data.datos);
+                console.log(data.status);
+                document.getElementById("id").value = data.datos.id;
+                document.getElementById("nombre").value = data.datos.nombre;
+                document.getElementById("fecha_nacimiento").value = data.datos.fecha_nacimiento;
+                document.getElementById("lugar_nacimiento").value = data.datos.lugar_nacimiento;
+                document.getElementById("ha_ganado_premios").value = data.datos.ha_ganado_premios;
+                document.getElementById("cantidad_premios").value = data.datos.cantidad_premios;
+                document.getElementById("peliculas").value = data.datos.peliculas;
+            }
+
+        })
+    </script>
 </body>
 
 </html>
