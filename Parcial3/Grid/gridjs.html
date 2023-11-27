@@ -25,7 +25,7 @@
       new gridjs.Grid({
       columns: ['id', 'nombre', 'lugar_nacimiento', 'peliculas'],
       server: {
-        url: 'http://localhost:8082',
+        url: 'http://localhost:8082/Actor',
         then: data => data.map(actor => [actor.id, actor.nombre, actor.lugar_nacimiento, actor.peliculas])
       }
     }).render(document.getElementById("wrapper"));
