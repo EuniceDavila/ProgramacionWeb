@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Actores</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+            background-color: rgb(230, 216, 252);
+            font-size: 20px;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .contenedor {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .formulario {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #8234db;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .btn:hover {
+            background-color: rgb(215, 116, 240);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        input {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #cc99e4;
+        }
+
+        h2 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 10px 0 20px;
+            font-size: 26px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor">
+        <form class="formulario">
+            <h2>Actor</h2>
+
+            <label for="id">ID Actor</label>
+            <input type="number" id="id" name="id">
+
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre">
+
+            <label for="lugar_nacimiento">Lugar de nacimiento</label>
+            <input type="text" id="lugar_nacimiento" name="lugar_nacimiento">
+
+            <label for="ha_ganado_premios">¿Ha ganado Premios?</label>
+            <input type="text" id="ha_ganado_premios" name="ha_ganado_premios">
+
+            <label for="cantidad_premios">Cantidad de premios</label>
+            <input type="number" id="cantidad_premios" name="cantidad_premios">
+
+            <label for="peliculas">Películas</label>
+            <input type="text" id="peliculas" name="peliculas">
+
+            <div class="btn-container">
+                <button type="button" id="btnConsultar" class="btn">Consultar</button>
+                <button type="button" id="btnEliminar" class="btn">Borrar</button>
+                <button type="button" id="btnInsertar" class="btn">Insertar</button>
+                <button type="button" id="btnActualizar" class="btn">Actualizar</button>
+                <button type="button" id="btnpdf" class="btn">Generar pdf</button>
+            </div>
+        </form>
+    </div>
+    <script>
+
+        document.getElementById("btnConsultar").addEventListener("click", async () => {
+            const { value: id } = await Swal.fire({
+                title: 'Ingresa el ID del Actor',
+                input: 'number',
+                inputLabel: 'ID',
+                inputPlaceholder: 'Ingresa el ID',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                    autocorrect: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Consultar',
+                cancelButtonText: 'Cancelar',
+                showLoaderOnConfirm: true,
+                preConfirm: (id) => {
+                    if (!id || id.trim() === '') {
+                        Swal.showValidationMessage('Por favor, ingresa un ID válido');
+                    }
+                }
+            });
+
+            if (id) {
+                let response = await fetch(`http://localhost:8082/Actor?id=${id}`, { method: "GET" });
+                let data = await response.json();
+                console.log(data);
+
+                if (data.status == 0) {
+                    Swal.fire('Error', data.mensaje, 'error');
+                    console.log(data.status);
+                } else {
+                    Swal.fire('Consulta exitosa', data.mensaje, 'success');
+                    console.log(data.datos);
+                    console.log(data.status);
+                    document.getElementById("id").value = data.datos.id;
+                    document.getElementById("nombre").value = data.datos.nombre;
+                    document.getElementById("lugar_nacimiento").value = data.datos.lugar_nacimiento;
+                    document.getElementById("ha_ganado_premios").value = data.datos.ha_ganado_premios;
+                    document.getElementById("cantidad_premios").value = data.datos.cantidad_premios;
+                    document.getElementById("peliculas").value = data.datos.peliculas;
+                }
+            }
+        });
+
+        document.getElementById("btnEliminar").addEventListener("click", async () => {
+            // Obtener el ID del actor desde el input directamente
+            let id = document.getElementById("id").value;
+
+            // Pedir confirmación con SweetAlert
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: `¡Estás a punto de eliminar los datos del actor con el ID: ${id}! ¡No podrás revertir esto!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarlo'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    let response = await fetch(`http://localhost:8082/Actor?id=${id}`, { method: "DELETE" });
+                    let data = await response.json();
+                    console.log(data);
+
+                    if (data.status == 1) {
+                        Swal.fire('¡Eliminado!', 'Los datos del actor han sido eliminados correctamente.', 'success');
+                    } else {
+                        Swal.fire('Error', 'No se pudo eliminar los datos del actor.', 'error');
+                    }
+                }
+            });
+        });
+
+        document.getElementById("btnInsertar").addEventListener("click", async () => {
+            let nombre = document.getElementById("nombre").value;
+            let lugarNacimiento = document.getElementById("lugar_nacimiento").value;
+            let haGanadoPremios = document.getElementById("ha_ganado_premios").value;
+            let cantidadPremios = document.getElementById("cantidad_premios").value;
+            let peliculas = document.getElementById("peliculas").value;
+
+            if (nombre && lugarNacimiento && haGanadoPremios && cantidadPremios && peliculas) {
+                const data = {
+                    nombre: nombre,
+                    lugar_nacimiento: lugarNacimiento,
+                    ha_ganado_premios: haGanadoPremios,
+                    cantidad_premios: cantidadPremios,
+                    peliculas: peliculas
+                };
+
+                try {
+                    const response = await fetch('http://localhost:8082/Actor', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const responseData = await response.json();
+
+                    if (response.ok) {
+                        Swal.fire('Éxito', 'Los datos del actor se insertaron correctamente', 'success');
+                    } else {
+                        Swal.fire('Error', 'No se pudo insertar los datos del actor', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    Swal.fire('Error', 'Hubo un problema al procesar la solicitud', 'error');
+                }
+            } else {
+                Swal.fire('Advertencia', 'Todos los campos deben ser llenados', 'warning');
+            }
+        });
+
+        document.getElementById("btnpdf").addEventListener("click", async () => {
+            let id = document.getElementById("id").value;
+            let nombre = document.getElementById("nombre").value;
+            let lugarNacimiento = document.getElementById("lugar_nacimiento").value;
+            let haGanadoPremios = document.getElementById("ha_ganado_premios").value;
+            let cantidadPremios = document.getElementById("cantidad_premios").value;
+            let peliculas = document.getElementById("peliculas").value;
+
+            let datos = {
+                id: id,
+                nombre: nombre,
+                lugar_nacimiento: lugarNacimiento,
+                ha_ganado_premios: haGanadoPremios,
+                cantidad_premios: cantidadPremios,
+                peliculas: peliculas
+            };
+
+            try {
+                let response = await fetch("http://localhost:8082/Actor/formato", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(datos)
+                });
+
+                let data = await response.blob();
+                let archivoPDF = URL.createObjectURL(data);
+                window.open(archivoPDF);
+            } catch (error) {
+                console.error('Error al generar el PDF:', error);
+            }
+        });
+
+        document.getElementById("btnActualizar").addEventListener("click", async () => {
+            let id = document.getElementById("id").value;
+            let nombre = document.getElementById("nombre").value;
+            let lugarNacimiento = document.getElementById("lugar_nacimiento").value;
+            let haGanadoPremios = document.getElementById("ha_ganado_premios").value;
+            let cantidadPremios = document.getElementById("cantidad_premios").value;
+            let peliculas = document.getElementById("peliculas").value;
+
+            try {
+                const response = await fetch(`http://localhost:8082/Actor/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        lugar_nacimiento: lugarNacimiento,
+                        ha_ganado_premios: haGanadoPremios,
+                        cantidad_premios: cantidadPremios,
+                        peliculas: peliculas
+                    })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    Swal.fire('Éxito', 'Los datos del actor se actualizaron correctamente', 'success');
+                } else {
+                    Swal.fire('Error', 'No se pudo actualizar los datos del actor', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
